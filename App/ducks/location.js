@@ -15,8 +15,12 @@ export const locations = (state = {}, action) => {
         ...state,
         [action.locationData.id]: action.locationData,
       };
-    case GET_BY_NAME:
     case GET_BY_NAME_FAIL:
+      return {
+        ...state,
+        [action.locationData.id]: 'fail',
+      }
+    case GET_BY_NAME:
     default:
       return state;
   }

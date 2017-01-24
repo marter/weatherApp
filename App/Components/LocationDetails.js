@@ -1,17 +1,35 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Card, CardItem, Content, Text } from 'native-base';
+import { Image, View, TextInput, ScrollView, TouchableHighlight } from 'react-native';
 
-import { View, Text, TextInput, ScrollView, TouchableHighlight } from 'react-native';
 import { getLocation } from '../ducks/location';
 
 class Location extends Component {
   renderDetails() {
+    const d = new Date();
+    const date = `${d.getDate()}-${d.getMonth() + 1}-${d.getFullYear()}`;
+    let image = ( <Image style={{ resizeMode: 'cover' }} source={require('../img/sunny.png')} />);
+    if (this.props.location.weather[0].description.includes('cloud')) {
+      image = ( <Image style={{ resizeMode: 'cover' }} source={require('../img/cloudy.png')} />);
+    } else if (this.props.location.weather[0].description.includes('rain')) {
+      image = ( <Image style={{ resizeMode: 'cover' }} source={require('../img/rain.png')} />);
+    }
     return(
-      <View>
-        <Text>{`Current: ${this.props.location.main.temp}F`}</Text>
-        {this.props.location.weather.map((item) => <Text>{item.description}</Text>)}
-        <Text>{`${JSON.stringify(this.props.location)}`}</Text>
-      </View>
+    <Content>
+      <Card style={{ flex: 0 }}>
+        <CardItem>
+          <Text>{this.props.location.main.temp}F</Text>
+          <Text note>{date}</Text>
+        </CardItem>
+        <CardItem >
+          {image}
+          <Text>
+            {this.props.location.weather.map((item, index) => <Text key={index}>{item.description}</Text>)}
+          </Text>
+        </CardItem>
+      </Card>
+    </Content>
     );
   }
   renderLoading() {
@@ -21,9 +39,9 @@ class Location extends Component {
   }
   render() {
     return(
-    <View style={{paddingTop: 74, flexGrow: 1}}>
-      {this.props.location ? this.renderDetails() : this.renderLoading()}
-    </View>
+    <ScrollView>
+      {this.props.location != undefined ? this.renderDetails() : this.renderLoading()}
+    </ScrollView>
     );
   }
 }

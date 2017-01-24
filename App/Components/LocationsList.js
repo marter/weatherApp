@@ -6,7 +6,7 @@ import {LocationItem} from './LocationItem';
 
 class Locations extends Component {
   renderLocations() {
-    return this.props.mine.map((location) => <LocationItem key={location} {...this.props.locations[location]} />);
+    return this.props.mine.map((location) => <LocationItem navigator={this.props.navigator} key={location} {...this.props.locations[location]} />);
   }
   render() {
     return(

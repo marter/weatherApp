@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-
 import { NavigatorIOS } from 'react-native';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import createSagaMiddleware from 'redux-saga';
+
 import { location } from '../ducks/location';
 import mySaga from '../sagas/getWeather';
 import SearchList from './Search';

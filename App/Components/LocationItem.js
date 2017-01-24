@@ -1,7 +1,24 @@
 import React from 'react';
-import { TouchableHighlight, Text } from 'react-native';
-export const LocationItem = (props) =>
-  <TouchableHighlight>
-    <Text>{`${props.name} ${props.main.temp}`}</Text>
-  </TouchableHighlight>;
+import { TouchableHighlight } from 'react-native';
+import { ListItem, Text, Icon } from 'native-base';
+
+export const LocationItem = (props) => {
+  let icon = 'ios-sunny';
+  if (props.weather[0].description.includes('cloud')) {
+    icon = 'ios-cloudy';
+  } else if (props.weather[0].description.includes('rain')) {
+    icon = 'ios-rainy';
+  }
+  let nextRoute = () => {
+    props.navigator.push({
+    title: props.name,
+    component: LocationDetails,
+    passProps: {id: props.id},
+  })}
+  return (
+  <ListItem iconRight onPress={nextRoute}>
+    <Text>{`${props.name} ${props.main.temp}F`}</Text>
+    <Icon name={icon} />
+  </ListItem>);
+}
 
