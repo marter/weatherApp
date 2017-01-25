@@ -16,8 +16,8 @@ export const LocationItem = (props) => {
     passProps: {id: props.id},
   })}
   return (
-  <ListItem iconRight onPress={nextRoute}>
-    <Text>{`${props.name} ${props.main.temp}F`}</Text>
+  <ListItem iconRight onPress={props.navigator ? nextRoute : null}>
+    <Text>{`${props.name} ${props.main.temp}F   ${props.main.humidity}% Humidity`}</Text>
     <Icon name={icon} />
   </ListItem>);
 }

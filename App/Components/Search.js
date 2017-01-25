@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { View, Text, TextInput, ScrollView, TouchableHighlight } from 'react-native';
 import { List, ListItem, Icon } from 'native-base';
 
-import { getLocation } from '../ducks/location';
+import { getLocation, getForecast } from '../ducks/location';
 import { addLocation } from '../ducks/mine';
 import { cities } from '../lib/cities';
 import LocationDetails from './LocationDetails';
@@ -35,6 +35,7 @@ class Search extends Component {
       nextRoute.onRightButtonPress = () => this.props.addLocation(city.id);
       nextRoute.rightButtonTitle = 'Add';
       this.props.onPress(city.id);
+      this.props.getForecast(city.id);
     }
     this.props.navigator.push(nextRoute);
   }
@@ -70,7 +71,8 @@ class Search extends Component {
 const mapDispatchtoActions = (dispatch) => {
   return {
     onPress: (id) => { return dispatch(getLocation(id))},
-    addLocation: (id) => { return dispatch(addLocation(id))}
+    addLocation: (id) => { return dispatch(addLocation(id))},
+    getForecast: (id) => { return dispatch(getForecast(id))},
   }
 }
 
