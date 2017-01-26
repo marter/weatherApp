@@ -4,22 +4,14 @@ import { getByLocationName, getLocationForecast } from '../lib/api';
 function* fetchLocationWeather(action) {
   try {
     let locationData = yield call(getByLocationName, action.location);
+    const locationForecast = yield call (getLocationForecast, action.location);
+    locationData = {...locationData, list: locationForecast.list};
     yield put({type: 'GET_BY_NAME_SUCCESS', locationData});
   } catch (e) {
     yield put({type: 'GET_BY_NAME_FAIL', e});
   }
 }
 
-function* fetchForecast(action) {
-  try {
-    let loc = yield call(getLocationForecast, action.id);
-    yield put({type: 'GET_FORECAST_SUCCESS', loc});
-  } catch (e) {
-    yield put({type: 'GET_BY_NAME_FAIL', e});
-  }
-}
-
 export default function* mySaga() {
-  yield takeLatest('GET_BY_NAME', fetchLocationWeather);
-  yield takeLatest('GET_FORECAST', fetchForecast);
+  yield takeEvery('GET_BY_NAME', fetchLocationWeather);
 }

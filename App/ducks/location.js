@@ -3,7 +3,6 @@ const GET_BY_NAME = 'GET_BY_NAME';
 const GET_BY_NAME_SUCCESS = 'GET_BY_NAME_SUCCESS';
 const GET_BY_NAME_FAIL = 'GET_BY_NAME_FAIL';
 const GET_FORECAST_SUCCESS = 'GET_FORECAST_SUCCESS';
-const GET_FORECAST = 'GET_FORECAST';
 
 export const getLocation = (location) =>({
   type: GET_BY_NAME,
@@ -28,11 +27,11 @@ export const locations = (state = {}, action) => {
         [action.locationData.id]: 'fail',
       };
     case GET_FORECAST_SUCCESS:
-      let loc = state[action.loc.city.id];
-      let list = action.loc.list;
+      let loc = state[action.city.id];
+      let list = action.list;
       return {
         ...state,
-        [action.loc.city.id]: {...loc, list},
+        [action.city.id]: {...loc, list},
       };
     default:
       return state;
